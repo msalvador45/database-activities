@@ -84,19 +84,31 @@ class Student(Entity):
         """
         return str(self.id) + "," + self.name
 
+""" Use OS.path.join """
 class DB: 
 
     def list_courses() -> list: 
         """
         TODO #1: list all courses
         """
-        pass
+        courses = []
+        with open(os.path.join('db', 'courses.csv'), 'r') as file:
+            for line in file:
+                line= line.strip()
+                prefix, number, description= line.split(',')
+                course= Course(prefix, number, description)
+                courses.append(course)
+            return courses
 
     def list_sections(course) -> list: 
         """
         TODO #2: list all sections of a course
         """
-        pass
+        sections= []
+        #messed up my section
+        #with open(os.path.join('db', course.prefix + str(course.code), 
+                               uu'sections.csv')), 'r'
+
 
     def list_students(section) -> list:
         """
