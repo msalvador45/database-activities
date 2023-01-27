@@ -101,6 +101,24 @@ class EmployeeCRUD(CRUD):
             * if the entity is found, return it
             * else, return None
         """
+        employee = None
+        try:
+            file = open(self.file_name, "r")
+            for line in file:
+                line = line.strip()
+                cols = line.split(",")
+                id = int(cols[0])
+                print("id: " + str(id))
+                print("key: " + str(key))
+                if id == key:
+                    name = cols[1]
+                    department = cols[2]
+                    employee = Employee(id, name, department)
+                    break
+        finally:
+            file.close()
+        return employee
+                
         pass
 
     def update(self, entity) -> bool: 

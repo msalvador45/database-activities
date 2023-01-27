@@ -1,0 +1,27 @@
+erdiagram movies
+notation = crowsfoot
+
+entity Movies {
+    title
+    length
+    year
+    genre
+}
+
+entity Stars {}
+
+relationship works{
+    Stars[N] -> Movies[N] 
+}
+
+entity Company{}
+entity President{}
+
+relationship runs {
+    President [0..1] -> Company[0..1]
+}
+
+entity Studios {}
+relationship owns {
+    Studios[0..1] -> Movies[N]
+}
