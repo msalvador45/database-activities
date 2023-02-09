@@ -1,0 +1,12 @@
+# when making relation model no more verbs
+
+Students(int id, str name)
+Courses(int number, str title)
+
+# since it is many to many you then 
+# move __________
+# rename id to studentid, to keep semantics to keep context
+
+Enrollment(int studentid, int course_number)
+
+# This is close to implemantation

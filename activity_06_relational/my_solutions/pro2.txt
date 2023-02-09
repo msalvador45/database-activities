@@ -1,0 +1,10 @@
+# this is one to many relationship
+# w/ a strong to weak entity
+
+Buildings(str name, str address)
+# when moving keys 
+Rooms(str building_name, int floor, int number)
+
+Do we not make model for relationship?
+
+
