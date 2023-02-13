@@ -1,19 +1,44 @@
 // CS3810: Principles of Database Systems
 // Instructor: Thyago Mota
-// Student: 
+// Student: Miguel A. Salvador Tzoni
 // Description: An ERD for a Paper Reviewing System
 
 erdiagram reviews
 notation=crowsfoot
 
 entity Papers  { 
-    
+   id key
+   contact_author key
+   title 
+   abstract 
+   file_name 
 }
 
 entity Authors { 
-    
+   email key 
+   first_name 
+   last_name 
 }
 
 entity Reviewers { 
-    
+    email key 
+    first_name 
+    last_name 
+    phone_number 
+    affiliation 
+    topics_intrest 
+}
+
+relationship reviews{ 
+    Reviewers[0..N] -> Papers [0..1]
+    technical_score 
+    readability_score 
+    originality_score 
+    relevance_score 
+    paper_recommendation 
+}
+
+relationship feedback{ 
+    Authors[0..1] -> Reviewers[0..N]
+    comment_feedback
 }
