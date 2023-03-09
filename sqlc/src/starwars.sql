@@ -164,6 +164,13 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- e) the star wars characters that have no fan ratings 
 
 -- f) the top 3 star wars characters based on fan ratings, showing their names and the average rating (rounded to 2 decimals) that they received 
+-- wannt name of characters want ratings from charRatings
+--   to do that we will need a join
+SELECT name FROM Characters A
+LEFT JOIN CharacterRatings B 
+ON A.id = B.character
+limit 3;
+
 
 -- g) The ids of the fans that gave a rating of 1 for "Darth Vader", in ascending order, so that they be banned from future star wars views
 
@@ -178,6 +185,7 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- m) the name of the character that received the least number of ratings 
 
 -- n) the favorite character according the yongest fan audience
+
 
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
 
