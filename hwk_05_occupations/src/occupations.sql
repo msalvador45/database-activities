@@ -37,10 +37,17 @@ SELECT jobFamily, COUNT(*) AS numberOfOccupations FROM Occupations
 GROUP BY jobFamily ORDER BY 1;
 
 -- TODO: e) the number of occupations in the "Computer and Mathematical" job family (expect 38)
-
+SELECT jobFamily, COUNT(*) AS total FROM Occupations
+WHERE jobFamily = 'Computer and Mathematical' GROUP BY 1;
 
 -- BONUS POINTS
 
 -- TODO: f) an alphabetical list of occupations in the "Computer and Mathematical" job family.
+SELECT occupation FROM Occupations
+WHERE jobFamily = 'Computer and Mathematical' ORDER BY 1;
 
 -- TODO: g) an alphabetical list of occupations in the "Computer and Mathematical" job family that begins with the word "Database"
+SELECT occupation FROM Occupations
+WHERE jobFamily = 'Computer and Mathematical' 
+AND occupation LIKE 'Database%'
+ORDER BY 1;
