@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Miguel A. Salvador Tzoni
 -- Description: a database of occupations
 
 CREATE DATABASE occupations;
@@ -10,10 +10,20 @@ CREATE DATABASE occupations;
 DROP TABLE IF EXISTS Occupations;
 
 -- TODO: create table Occupations
+CREATE TABLE Occupations(
+    code VARCHAR(10) PRIMARY KEY,
+    occupation VARCHAR(300),
+    jobFamily VARCHAR(300)
+);
+
+\d Occupations
 
 -- TODO: populate table Occupations
+\copy Occupations
+    (code, occupation, job) from /home/occupations.csv DELIMITER ',' CSV HEADER;
 
 -- TODO: a) the total number of occupations (expect 1016).
+SELECT COUNT(*) FROM Occupations;
 
 -- TODO: b) a list of all job families in alphabetical order (expect 23).
 
