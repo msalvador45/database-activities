@@ -34,7 +34,6 @@ SELECT COUNT(*) FROM Astronauts;
 SELECT COUNT(*) AS total FROM Astronauts WHERE country = 'USA';
 
 -- c) the list of nationalities of all astronauts in alphabetical order.
-SELECT DISTINCT country FROM Astronauts ORDER BY 1;
 
 -- d) all astronaut names ordered by last name (use the format Last Name, First Name, Suffix to display the names).
 SELECT CONCAT(lastName, ', ', firstName) AS name FROM Astronauts ORDER BY 1;

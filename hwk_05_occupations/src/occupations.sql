@@ -26,12 +26,18 @@ CREATE TABLE Occupations(
 SELECT COUNT(*) FROM Occupations;
 
 -- TODO: b) a list of all job families in alphabetical order (expect 23).
+SELECT DISTINCT jobFamily FROM Occupations
+ORDER BY 1;
 
 -- TODO: c) the total number of job families (expect 23)
+SELECT COUNT(DISTINCT jobFamily) AS total FROM Occupations;
 
 -- TODO: d) the total number of occupations per job family in alphabetical order of job family.
+SELECT jobFamily, COUNT(*) AS numberOfOccupations FROM Occupations
+GROUP BY jobFamily ORDER BY 1;
 
 -- TODO: e) the number of occupations in the "Computer and Mathematical" job family (expect 38)
+
 
 -- BONUS POINTS
 
