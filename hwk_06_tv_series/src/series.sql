@@ -58,6 +58,8 @@ INSERT INTO Acts VALUES (3, 7);
 INSERT INTO Acts VALUES (3, 8);
 
 -- TODO #1) return all actors/actresses sorted by actorId
+SELECT actorId, actorName FROM Actors
+ORDER BY 1;
 
 -- TODO #2) return all actresses sorted by actorName
 
