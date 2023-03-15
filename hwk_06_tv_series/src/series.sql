@@ -62,8 +62,14 @@ SELECT actorId, actorName FROM Actors
 ORDER BY 1;
 
 -- TODO #2) return all actresses sorted by actorName
+SELECT actorName FROM Actors
+WHERE sex = 'F'
+ORDER BY 1;
 
 -- TODO #3) return the counts of actors and actress using two columns: 'sex' and 'total', sorted by sex
+SELECT sex, COUNT(*) AS Total FROM Actors
+GROUP BY sex
+ORDER BY sex;
 
 -- TODO #4) return the names of the actors/actresses that were in 'The Americans' sorted by actorName
 
