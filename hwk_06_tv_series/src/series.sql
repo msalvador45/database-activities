@@ -72,5 +72,12 @@ GROUP BY sex
 ORDER BY sex;
 
 -- TODO #4) return the names of the actors/actresses that were in 'The Americans' sorted by actorName
+SELECT B.actorName, C.title FROM Acts A
+INNER JOIN Actors B 
+ON A.actorID = B.actorID 
+INNER JOIN Series C 
+ON A.seriesID = C.seriesID
+WHERE C.title = 'The Americans'
+ORDER BY B.actorName;
 
 -- TODO #5) return the names of actors/actresses that didn't appear in any series sorted by actorName
