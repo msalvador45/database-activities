@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Miguel Angel Salvador Tzoni
 -- Description: a database of tv series
 
 CREATE DATABASE series;
@@ -81,3 +81,10 @@ WHERE C.title = 'The Americans'
 ORDER BY B.actorName;
 
 -- TODO #5) return the names of actors/actresses that didn't appear in any series sorted by actorName
+SELECT B.actorName, C.title FROM Acts A
+INNER JOIN Actors B 
+ON A.actorID = B.actorID 
+INNER JOIN Series C 
+ON A.seriesID = C.seriesID
+WHERE C.title = NULL
+ORDER BY B.actorName;
