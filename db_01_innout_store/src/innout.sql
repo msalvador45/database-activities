@@ -10,8 +10,36 @@ CREATE DATABASE innout;
 \c innout
 
 -- TODO: table create statements
+CREATE TABLE Customers ( 
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(25) NOT NULL,
+    gender VARCHAR(1) DEFAULT '?'
+);
+
+CREATE TABLE Sales (
+    customer_id SERIAL,
+    item_code VARCHAR(3),
+    date_sold DATE NOT NULL,
+    time_sold TIME NOT NULL,
+    number_of_items INTEGER NOT NULL,
+    ammount_paid FLOAT NOT NULL,
+    PRIMARY KEY (customer_id, item_code)
+);
+
+CREATE TABLE Items (
+    code VARCHAR(10) PRIMARY KEY,
+    description VARCHAR(300) NOT NULL,
+    price FLOAT NOT NULL,
+    category_code VARCHAR(3)
+);
+
+CREATE TABLE Categories (
+    code VARCHAR(3) PRIMARY key,
+    description VARCHAR(300) NOT NULL
+);
 
 -- TODO: table insert statements
+
 
 -- TODO: SQL queries
 
