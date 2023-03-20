@@ -18,7 +18,7 @@ CREATE TABLE Customers (
 
 CREATE TABLE Sales (
     customer_id SERIAL,
-    item_code VARCHAR(3),
+    item_code VARCHAR(5),
     date_sold DATE NOT NULL,
     time_sold TIME NOT NULL,
     number_of_items INTEGER NOT NULL,
@@ -43,8 +43,10 @@ INSERT INTO Customers (name, gender) VALUES
     ('Migui Tzoni', 'M'),
     ('Chalino Sanchez', 'M'),
     ('Selena Quintanilla', 'F'),
-    ('Eduardo Vasquez', 'M'),
-    ('Ice Spice', '?');
+    ('Eduardo Vasquez', 'M');
+
+INSERT INTO Customers (name) VALUES
+    ('Kurt Kobain');
 
 INSERT INTO Categories (code, description) VALUES
     ('BVR', 'beverages'),
@@ -54,9 +56,18 @@ INSERT INTO Categories (code, description) VALUES
     ('BKY', 'bakery'),
     ('MEA', 'meat');
 
-INSERT INTO ITEMS (description, price, category_code) VALUES
-    ('')
+INSERT INTO Items (code, description, price, category_code) VALUES
+    ('IN001','fanta', 10.43, 'BVR'),
+    ('IN202','chicken', 40.56, 'MEA'),
+    ('IN384','carrots', 3.99, 'PRD'),
+    ('IN457', 'cookies', 8.83, 'BKY'),
+    ('IN870', 'pizza',4.99, 'FRZ'),
+    ('IN232', 'milk', 20.12, 'DRY');
 
+INSERT INTO Sales (customer_id, item_code, date_sold, time_sold, number_of_items, ammount_paid) VALUES
+    (1, 'IN202', '2023-01-18', '10:34', 3, 23.23),
+    (4, 'IN232', '2023-03-14', '23:59', 1, 10.21),
+    (1, 'IN870', '2023-02-14', '17:30', 1, 5.99);
 
 -- TODO: SQL queries
 
