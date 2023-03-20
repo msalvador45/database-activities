@@ -114,6 +114,9 @@ ON A.Item_code = C.code
 WHERE customer_id = :ID;
 
 -- i) the total amount of sales per day showing the date and the total amount paid in chronological order
+SELECT COUNT(*) AS total, CONCAT(date_sold,',', ammount_paid) AS date_sold_and_amt_paid FROM SALES
+GROUP BY date_sold_and_amt_paid
+ORDER BY date_sold_and_amt_paid;
 
 -- j) the description of the top item (labeled as item) in sales with the total sales amount (labeled as total_paid)
 
