@@ -62,7 +62,10 @@ INSERT INTO Items (code, description, price, category_code) VALUES
     ('IN384','carrots', 3.99, 'PRD'),
     ('IN457', 'cookies', 8.83, 'BKY'),
     ('IN870', 'pizza',4.99, 'FRZ'),
-    ('IN232', 'milk', 20.12, 'DRY');
+    ('IN232', 'milk', 20.12, 'DRY')
+
+INSERT INTO ITEMS (code, description, price) VALUES
+    ('IN834', 'eggs', 54.99);
 
 INSERT INTO Sales (customer_id, item_code, date_sold, time_sold, number_of_items, ammount_paid) VALUES
     (1, 'IN202', '2023-01-18', '10:34', 3, 23.23),
@@ -83,8 +86,13 @@ SELECT gender, COUNT(*) AS number_customers FROM Customers
 GROUP BY gender ORDER BY gender;
 
 -- d) a list of all item codes (labeled as code) and descriptions (labeled as description) followed by their category descriptions (labeled as category) in numerical order of their codes (items that do not have a category should not be displayed)
+SELECT A.code, A.category_code AS description, B.description AS Category FROM Items A 
+INNER JOIN Categories B 
+ON A.category_code = B.code;
 
 -- e) a list of all item codes (labeled as code) and descriptions (labeled as description) in numerical order of their codes for the items that do not have a category
+SELECT * FROM Items
+WHERE category_code = NULL;
 
 -- f) a list of the category descriptions (labeled as category) that do not have an item in alphabetical order
 
