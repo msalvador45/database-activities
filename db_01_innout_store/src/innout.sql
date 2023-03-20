@@ -76,8 +76,11 @@ SELECT (name) FROM Customers
 ORDER BY 1;
 
 -- b) number of items (labeled as total_items) in the database 
+SELECT COUNT(*) AS total_items FROM Customers;
 
 -- c) number of customers (labeled as number_customers) by gender
+SELECT gender, COUNT(*) AS number_customers FROM Customers
+GROUP BY gender ORDER BY gender;
 
 -- d) a list of all item codes (labeled as code) and descriptions (labeled as description) followed by their category descriptions (labeled as category) in numerical order of their codes (items that do not have a category should not be displayed)
 
