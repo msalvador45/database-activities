@@ -72,6 +72,8 @@ INSERT INTO Sales (customer_id, item_code, date_sold, time_sold, number_of_items
 -- TODO: SQL queries
 
 -- a) all customer names in alphabetical order
+SELECT (name) FROM Customers
+ORDER BY 1;
 
 -- b) number of items (labeled as total_items) in the database 
 
