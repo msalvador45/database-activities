@@ -91,10 +91,12 @@ INNER JOIN Categories B
 ON A.category_code = B.code;
 
 -- e) a list of all item codes (labeled as code) and descriptions (labeled as description) in numerical order of their codes for the items that do not have a category
-SELECT * FROM Items
-WHERE category_code = NULL;
+SELECT code, category_code AS description FROM Items
+WHERE category_code = NULL
+ORDER BY code;:Walking
 
 -- f) a list of the category descriptions (labeled as category) that do not have an item in alphabetical order
+SELECT
 
 -- g) set a variable named "ID" and assign a valid customer id to it; then show the content of the variable using a select statement
 
