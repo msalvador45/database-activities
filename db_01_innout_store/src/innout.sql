@@ -12,7 +12,7 @@ CREATE DATABASE innout;
 -- TODO: table create statements
 CREATE TABLE Customers ( 
     id SERIAL PRIMARY KEY,
-    name VARCHAR(25) NOT NULL,
+    name VARCHAR(40) NOT NULL,
     gender VARCHAR(1) DEFAULT '?'
 );
 
@@ -39,6 +39,23 @@ CREATE TABLE Categories (
 );
 
 -- TODO: table insert statements
+INSERT INTO Customers (name, gender) VALUES
+    ('Migui Tzoni', 'M'),
+    ('Chalino Sanchez', 'M'),
+    ('Selena Quintanilla', 'F'),
+    ('Eduardo Vasquez', 'M'),
+    ('Ice Spice', '?');
+
+INSERT INTO Categories (code, description) VALUES
+    ('BVR', 'beverages'),
+    ('DRY', 'dairy'),
+    ('PRD', 'produce'),
+    ('FRZ', 'frozen'),
+    ('BKY', 'bakery'),
+    ('MEA', 'meat');
+
+INSERT INTO ITEMS (description, price, category_code) VALUES
+    ('')
 
 
 -- TODO: SQL queries
