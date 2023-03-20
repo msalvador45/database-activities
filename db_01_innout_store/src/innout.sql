@@ -59,13 +59,12 @@ INSERT INTO Categories (code, description) VALUES
 INSERT INTO Items (code, description, price, category_code) VALUES
     ('IN001','fanta', 10.43, 'BVR'),
     ('IN202','chicken', 40.56, 'MEA'),
-    ('IN384','carrots', 3.99, 'PRD'),
-    ('IN457', 'cookies', 8.83, 'BKY'),
+    ('N457', 'cookies', 8.83, 'BKY'),
     ('IN870', 'pizza',4.99, 'FRZ'),
     ('IN232', 'milk', 20.12, 'DRY')
 
-INSERT INTO ITEMS (code, description, price) VALUES
-    ('IN834', 'eggs', 54.99);
+INSERT INTO ITEMS (code, description, price, category_code) VALUES
+    ('IN835', 'eggs', 54.99, NULL);
 
 INSERT INTO Sales (customer_id, item_code, date_sold, time_sold, number_of_items, ammount_paid) VALUES
     (1, 'IN202', '2023-01-18', '10:34', 3, 23.23),
@@ -93,14 +92,26 @@ ON A.category_code = B.code;
 -- e) a list of all item codes (labeled as code) and descriptions (labeled as description) in numerical order of their codes for the items that do not have a category
 SELECT code, category_code AS description FROM Items
 WHERE category_code = NULL
-ORDER BY code;:Walking
+ORDER BY code;
 
 -- f) a list of the category descriptions (labeled as category) that do not have an item in alphabetical order
-SELECT
+SELECT A.description AS category FROM Categories A 
+INNER JOIN Items B 
+ON A.code = B.category_code
+WHERE B.category_code = NULL
+ORDER BY 1;
 
 -- g) set a variable named "ID" and assign a valid customer id to it; then show the content of the variable using a select statement
+\set ID 1
+SELECT :ID;
 
 -- h) a list describing all items purchased by the customer identified by the variable "ID" (you must used the variable), showing, the date of the purchase (labeled as date), the time of the purchase (labeled as time and in hh:mm:ss format), the item's description (labeled as item), the quantity purchased (labeled as qtt), the item price (labeled as price), and the total amount paid (labeled as total_paid).
+SELECT customer_id, date_sold AS date, time_sold AS time, description AS item, number_of_items AS qtt, price, ammount_paid AS total_paid FROM Sales A
+INNER JOIN Customers B
+ON A.customer_id = B.id 
+INNER JOIN Items C 
+ON A.Item_code = C.code
+WHERE customer_id = :ID;
 
 -- i) the total amount of sales per day showing the date and the total amount paid in chronological order
 
