@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student(s): 
+-- Student(s): Miguel Salvador
 -- Description: SQL for the In-N-Out Store
 
 DROP DATABASE innout;
