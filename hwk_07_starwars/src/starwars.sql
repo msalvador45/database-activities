@@ -163,6 +163,17 @@ GROUP BY A.title
 ORDER BY rating DESC;
 
 -- j) the top rated film by fans with income '$150,000+'
+SELECT B.title AS top_rated_film_for_fans_over_150000, AVG(A.rating) AS rating FROM FilmRatings A 
+INNER JOIN Films B 
+ON A.film = B.id 
+INNER JOIN Fans C 
+ON A.fan = C.id 
+INNER JOIN IncomeLevels D 
+ON C.income = D.seq 
+WHERE D.description = '$150,000+'
+Group BY B.title, D.description
+ORDER BY 1
+LIMIT 1;
 
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
 
