@@ -18,6 +18,7 @@ entity Items {
     code key 
     description 
     price 
+    categoryCode
 }
 
 entity Categories { 
