@@ -156,6 +156,11 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- TODO: answer a minimum of 5 of the 7 questions below; you can get up to 7 points in this homework if you get ALL queries right
 
 -- h) the top rated star wars film by the fans 
+SELECT A.title, AVG(B.rating) AS rating FROM Films A
+INNER JOIN FilmRatings B
+ON A.id = B.film
+GROUP BY A.title
+ORDER BY rating DESC;
 
 -- j) the top rated film by fans with income '$150,000+'
 
