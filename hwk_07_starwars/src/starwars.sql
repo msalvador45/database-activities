@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Miguel Angel Salvador Tzoni
 -- Description: Star Wars Database (SQL Competition)
 
 CREATE DATABASE starwars;
