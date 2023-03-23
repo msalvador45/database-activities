@@ -210,8 +210,9 @@ ORDER BY average_rating DESC
 LIMIT 1;
 
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
-SELECT B.seq, B.description, COUNT(id) AS number_of_fans FROM Fans A 
+SELECT B.seq, B.description, COUNT(*) AS number_of_fans FROM Fans A 
 INNER JOIN IncomeLevels B 
 ON A.income = B.seq
 GROUP BY B.description, B.seq
+HAVING COUNT(*) >= 100
 ORDER BY B.seq;
