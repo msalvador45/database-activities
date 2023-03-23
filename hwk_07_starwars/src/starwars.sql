@@ -163,7 +163,7 @@ GROUP BY A.title
 ORDER BY rating DESC;
 
 -- j) the top rated film by fans with income '$150,000+'
-SELECT B.title AS top_rated_film_for_fans_over_150000, AVG(A.rating) AS rating FROM FilmRatings A 
+SELECT B.title AS top_rated_film_for_fans_making_over_150000, ROUND(AVG(A.rating),0) AS rating FROM FilmRatings A 
 INNER JOIN Films B 
 ON A.film = B.id 
 INNER JOIN Fans C 
