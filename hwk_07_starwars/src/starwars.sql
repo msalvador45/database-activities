@@ -163,7 +163,7 @@ GROUP BY A.title
 ORDER BY rating DESC;
 
 -- j) the top rated film by fans with income '$150,000+'
-SELECT B.title AS top_rated_film_for_fans_making_over_150000, ROUND(AVG(A.rating),0) AS rating FROM FilmRatings A 
+SELECT B.title AS top_rated_film_for_fans_making_over_150000, ROUND(AVG(A.rating),2) AS rating FROM FilmRatings A 
 INNER JOIN Films B 
 ON A.film = B.id 
 INNER JOIN Fans C 
@@ -176,8 +176,18 @@ ORDER BY 1
 LIMIT 1;
 
 -- k) the number of ratings AND the average rating received by "Princess Leia", rounded to 2 decimals
+SELECT B.name, COUNT(*) AS number_of_ratings, ROUND(AVG(A.rating),2) AS average_rating FROM CharacterRatings A
+INNER JOIN Characters B
+ON A.character = B.id
+WHERE B.name = 'Princess Leia'
+GROUP BY B.name;
 
 -- l) the average rating of "Star Wars: Episode V The Empire Strikes Back", rounded to 2 decimals
+SELECT A.title, ROUND(AVG(B.rating), 2) AS average_rating FROM Films A
+INNER JOIN FilmRatings B
+ON A.id = B.film
+WHERE A.title = 'Star Wars: Episode V The Empire Strikes Back'
+GROUP BY A.title;
 
 -- m) the name of the character that received the least number of ratings 
 
