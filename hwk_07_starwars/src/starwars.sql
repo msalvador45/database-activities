@@ -190,7 +190,23 @@ WHERE A.title = 'Star Wars: Episode V The Empire Strikes Back'
 GROUP BY A.title;
 
 -- m) the name of the character that received the least number of ratings 
+SELECT B.name, COUNT(*) AS number_of_ratings FROM CharacterRatings A 
+INNER JOIN characters B 
+ON A.character = B.id 
+GROUP BY B.name
+LIMIT  1;
 
 -- n) the favorite character according the yongest fan audience
+SELECT B.name, ROUND(AVG(A.rating), 2) AS average_rating FROM CharacterRatings A
+INNER JOIN Characters B 
+ON A.character = B.id 
+INNER JOIN FANS C 
+ON A.fan = C.id 
+INNER JOIN AgeGroups D 
+ON C.age = D. seq 
+WHERE D.description = '18-29'
+GROUP BY B.name, D.description
+ORDER BY average_rating DESC
+LIMIT 1;
 
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
