@@ -14,3 +14,8 @@ CREATE TABLE Employees (
 INSERT INTO Employees VALUES
  ( 1, 'Sam Mai Tai', 35000 ),
  ( 2, 'Morbid Mojito', 65350 );
+
+CREATE USER "hr" PASSWORD '024680';
+CREATE USER "hr_admin" PASSWORD '135791';
+
+\du 
