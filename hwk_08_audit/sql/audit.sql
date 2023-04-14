@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Miguel A. Salvador Tzoni
 -- Description: SQL for the audit database
 
 DROP DATABASE audit;
@@ -20,17 +20,8 @@ CREATE TABLE EmployeesAudit (
     descr VARCHAR(200) NOT NULL
 );
 
--- example
-CREATE FUNCTION employee_audit_after_insert() RETURNS TRIGGER
-    LANGUAGE plpgsql
-    AS $$
-        BEGIN
-            INSERT INTO EmployeesAudit VALUES (seq, CURRENT_DATE, CONCAT(id, ', ', name) AS descr)
-        END;
-    $$;
-
 --- CREATE FUNCTION employee_audit_after_insert() RETURNS TRIGGER
-CREATE FUNCTION employee_audit_after_insert() RETURNS TRIGGER
+CREATE OR REPLACE FUNCTION employee_audit_after_insert() RETURNS TRIGGER
     LANGUAGE plpgsql
     AS $$
         BEGIN
