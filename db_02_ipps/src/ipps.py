@@ -1,7 +1,7 @@
 """
 CS3810: Principles of Database Systems
 Instructor: Thyago Mota
-Student(s): 
+Student(s): Miguel A. Salvador Tzoni
 Description: A data load script for the IPPS database
 """
 

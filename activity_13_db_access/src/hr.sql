@@ -14,3 +14,14 @@ CREATE TABLE Employees (
 INSERT INTO Employees VALUES
  ( 1, 'Sam Mai Tai', 35000 ),
  ( 2, 'Morbid Mojito', 65350 );
+
+ -- creating users
+ CREATE USER "hr" PASSWORD '024680';
+ CREATE USER "hr_admin" PASSWORD '135791';
+
+ -- verify user
+ \du 
+
+ -- what accesss to users have ->
+ GRANT SELECT ON TABLE Employees TO "hr";       -- can only use SELECT
+ GRANT ALL ON TABLE Employees TO "hr_admin";       -- can use all commands on Employees
