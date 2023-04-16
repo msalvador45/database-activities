@@ -12,7 +12,7 @@ CREATE DATABASE ipps;
 -- create tables
 CREATE TABLE Providers(
     ccn INT PRIMARY KEY,
-    prvdrName VARCHAR (500) NOT NULL,
+    prvdrName VARCHAR (500) NOT NULL
 );
 
 CREATE TABLE ProviderLocations(
@@ -37,19 +37,24 @@ CREATE TABLE CdDescriptions(
 );
 
 CREATE TABLE ProviderCharges(
-    dCode INT NOT NULL,
-    rprvdrCCN INT NOT NULL,
-    cucaCode INT NOT NULL,
+    prvdrCCN INT NOT NULL,
+    cdCode INT NOT NULL,
+    rucaCode INT NOT NULL,
     dscharges INT,
     avgCrvdChrg NUMERIC(16,10) NOT NULL,
     avgPymt NUMERIC(16,10) NOT NULL,
     avgMdcrPymt NUMERIC(16,10) NOT NULL,
     PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
-    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
-    FOREIGN KEY (cdCode) REFERENCES CdDescriptions(code)
+    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
+    FOREIGN KEY (cdCode) REFERENCES CdDescriptions(code),
     FOREIGN KEY (rucaCode) REFERENCES RUCADescriptions(code)
 );
 -- create user with appropriate access to the tables
+CREATE USER "ipps" PASSWORD '024680';
+
+\du --check for user
+
+GRANT ALL ON TABLE Providers, ProviderLocations, RUCADescriptions, CdDescriptions, ProviderCharges TO "ipps";
 
 -- queries
 
