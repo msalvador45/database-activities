@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student(s): 
+-- Student(s): Miguel A Salvador Tzoni
 -- Description: IPPS database
 
 DROP DATABASE ipps;
@@ -10,7 +10,45 @@ CREATE DATABASE ipps;
 \c ipps
 
 -- create tables
+CREATE TABLE Providers(
+    ccn INT PRIMARY KEY,
+    prvdrName VARCHAR (500) NOT NULL,
+);
 
+CREATE TABLE ProviderLocations(
+    prvdrCCN INT NOT NULL,
+    stateFIPS INT NOT NULL,
+    street VARCHAR(500),
+    city VARCHAR(50),
+    prvdrState VARCHAR(2),
+    zip INT,
+    PRIMARY KEY (prvdrCCN, stateFIPS),
+    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
+);
+
+CREATE TABLE RUCADescriptions(
+    code INT PRIMARY KEY,
+    rucaDesc VARCHAR(500)
+);
+
+CREATE TABLE CdDescriptions(
+    code INT PRIMARY KEY,
+    cdDesc VARCHAR(500)
+);
+
+CREATE TABLE ProviderCharges(
+    dCode INT NOT NULL,
+    rprvdrCCN INT NOT NULL,
+    cucaCode INT NOT NULL,
+    dscharges INT,
+    avgCrvdChrg NUMERIC(16,10) NOT NULL,
+    avgPymt NUMERIC(16,10) NOT NULL,
+    avgMdcrPymt NUMERIC(16,10) NOT NULL,
+    PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
+    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
+    FOREIGN KEY (cdCode) REFERENCES CdDescriptions(code)
+    FOREIGN KEY (rucaCode) REFERENCES RUCADescriptions(code)
+);
 -- create user with appropriate access to the tables
 
 -- queries
