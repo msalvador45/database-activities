@@ -1,22 +1,18 @@
 import psycopg2
+import configparser as cp 
 
-params = {
-    'host': 'localhost', 
-    'port': 5432, 
-    'dbname': 'hr', 
-    'user': 'hr_admin',
-    'password': '135791'
-}
+config = cp.RawConfigParser() #object out of cp 
+config.read('ConfigFile.properties') #obj reads in file w/ function
+params = dict(config.items('db')) #store parameters in params 
 
+# connect to psycopg2
 conn = psycopg2.connect(**params)
-if conn: 
+
+# test connection
+if conn:
     print('Connection to Postgres database ' + params['dbname'] + ' was successful!')
 
-    cur = conn.cursor()
-    sql = 'SELECT id, name FROM employees'
-    cur.execute(sql)
-    for row in cur.fetchall():
-        print(row)
-
-    print('Bye!')
-    conn.close()
+    
+    
+    print('Bye!') # after done executing commands 
+    conn.close() #close connection

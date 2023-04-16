@@ -28,27 +28,28 @@ CREATE TABLE ProviderLocations(
 
 CREATE TABLE RUCADescriptions(
     code INT PRIMARY KEY,
-    rucaDesc VARCHAR(500)
+    rucaDesc VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE CdDescriptions(
+CREATE TABLE CDDescriptions(
     code INT PRIMARY KEY,
-    cdDesc VARCHAR(500)
+    cdDesc VARCHAR(500) NOT NULL
 );
 
-CREATE TABLE ProviderCharges(
+CREATE TABLE Charges(
     prvdrCCN INT NOT NULL,
     cdCode INT NOT NULL,
     rucaCode INT NOT NULL,
     dscharges INT,
-    avgCrvdChrg NUMERIC(16,10) NOT NULL,
-    avgPymt NUMERIC(16,10) NOT NULL,
-    avgMdcrPymt NUMERIC(16,10) NOT NULL,
+    avgCrvdChrg NUMERIC(16,10),
+    avgPymt NUMERIC(16,10),
+    avgMdcrPymt NUMERIC(16,10),
     PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
-    FOREIGN KEY (cdCode) REFERENCES CdDescriptions(code),
+    FOREIGN KEY (cdCode) REFERENCES CDDescriptions(code),
     FOREIGN KEY (rucaCode) REFERENCES RUCADescriptions(code)
 );
+
 -- create user with appropriate access to the tables
 CREATE USER "ipps" PASSWORD '024680';
 
