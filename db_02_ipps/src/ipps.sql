@@ -22,7 +22,7 @@ CREATE TABLE ProviderLocations(
     Rndrng_Prvdr_City VARCHAR(50),
     Rndrng_Prvdr_State_Abrvtn VARCHAR(2),
     Rndrng_Prvdr_Zip5 INT,
-    PRIMARY KEY (prvdrCCN, stateFIPS),
+    PRIMARY KEY (Rndrng_Prvdr_CCN, Rndrng_Prvdr_State_FIPS),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE Charges(
     Avg_Submtd_Cvrd_Chrg NUMERIC,
     Avg_Tot_Pymt_Amt NUMERIC,
     Avg_Mdcr_Pymt_Amt NUMERIC,
-    PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
+    PRIMARY KEY (Rndrng_Prvdr_CCN, DRG_Cd, Rndrng_Prvdr_RUCA),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
     FOREIGN KEY (cdCode) REFERENCES CDDescriptions(code),
     FOREIGN KEY (rucaCode) REFERENCES RUCADescriptions(code)
@@ -60,18 +60,37 @@ GRANT ALL ON TABLE Providers, ProviderLocations, RUCADescriptions, CDDescription
 -- queries
 
 -- a) List all diagnosis in alphabetical order.    
-SELECT cdDesc FROM CDDescriptions
-ORDER BY cdDesc
+SELECT DRG_Cd, DRG_Desc AS diagnosis FROM CDDescriptions
+ORDER BY DRG_Desc;
 
 -- b) List the names and correspondent states (including Washington D.C.) of all of the providers in alphabetical order (state first, provider name next, no repetition). 
+SELECT DISTINCT Rndrng_Prvdr_State_Abrvtn, Rndrng_Prvdr_Org_Name FROM ProviderLocations A 
+LEFT JOIN Providers B 
+ON A.Rndrng_Prvdr_CCN = B.Rndrng_Prvdr_CCN;
 
 -- c) List the total number of providers.
+SELECT COUNT(*) AS total_number_providers FROM Providers;
 
 -- d) List the total number of providers per state (including Washington D.C.) in alphabetical order (also printing out the state).  
+SELECT Rndrng_Prvdr_State_Abrvtn, COUNT(Rndrng_Prvdr_CCN) AS total_number_providers FROM ProviderLocations 
+GROUP BY Rndrng_Prvdr_State_Abrvtn
+ORDER BY 1;
 
 -- e) List the providers names in Denver (CO) or in Lakewood (CO) in alphabetical order  
+SELECT Rndrng_Prvdr_City, Rndrng_Prvdr_Org_Name AS provider FROM ProviderLocations A 
+INNER JOIN Providers B 
+ON A.Rndrng_Prvdr_CCN = B.Rndrng_Prvdr_CCN
+WHERE Rndrng_Prvdr_State_Abrvtn = 'CO' AND Rndrng_Prvdr_City = 'Denver' OR Rndrng_Prvdr_City = 'Lakewood'
+GROUP BY Rndrng_Prvdr_City, Rndrng_Prvdr_Org_Name
+ORDER BY 1;
 
 -- f) List the number of providers per RUCA code (showing the code and description)
+SELECT A.Rndrng_Prvdr_RUCA, Rndrng_Prvdr_RUCA_Desc, COUNT(Rndrng_Prvdr_Org_Name) AS total_providers FROM RUCADescriptions A 
+INNER JOIN Charges B
+ON A.Rndrng_Prvdr_RUCA = B.Rndrng_Prvdr_RUCA
+INNER JOIN Providers C 
+ON B.Rndrng_Prvdr_CCN = C.Rndrng_Prvdr_CCN
+GROUP BY A.Rndrng_Prvdr_RUCA;
 
 -- g) Show the DRG description for code 308 
 
