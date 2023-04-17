@@ -27,7 +27,7 @@ CREATE TABLE ProviderLocations(
 );
 
 CREATE TABLE RUCADescriptions(
-    code INT PRIMARY KEY,
+    code NUMERIC(10,2) PRIMARY KEY,
     rucaDesc VARCHAR(500) NOT NULL
 );
 
@@ -39,11 +39,11 @@ CREATE TABLE CDDescriptions(
 CREATE TABLE Charges(
     prvdrCCN INT NOT NULL,
     cdCode INT NOT NULL,
-    rucaCode INT NOT NULL,
+    rucaCode NUMERIC(10,2) NOT NULL,
     dscharges INT,
-    avgCrvdChrg NUMERIC(16,10),
-    avgPymt NUMERIC(16,10),
-    avgMdcrPymt NUMERIC(16,10),
+    avgCrvdChrg NUMERIC,
+    avgPymt NUMERIC,
+    avgMdcrPymt NUMERIC,
     PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
     FOREIGN KEY (cdCode) REFERENCES CDDescriptions(code),
@@ -55,7 +55,7 @@ CREATE USER "ipps" PASSWORD '024680';
 
 \du --check for user
 
-GRANT ALL ON TABLE Providers, ProviderLocations, RUCADescriptions, CdDescriptions, ProviderCharges TO "ipps";
+GRANT ALL ON TABLE Providers, ProviderLocations, RUCADescriptions, CDDescriptions, Charges TO "ipps";
 
 -- queries
 
