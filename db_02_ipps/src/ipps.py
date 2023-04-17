@@ -32,23 +32,23 @@ if conn:
     
     # prepare statemnsts for tables
     providersIn =   '''PREPARE providersInsert(int, text) AS
-                    INSERT INTO Providers (ccn, prvdrName) VALUES
+                    INSERT INTO Providers (Rndrng_Prvdr_CCN, Rndrng_Prvdr_Org_Name) VALUES
                     ($1, $2);
                     '''
     provider_loc_insert = '''PREPARE providerLocationsInsert(int, int, text, text, text, int) AS
-                    INSERT INTO ProviderLocations (prvdrCCN, stateFIPS, street, city, prvdrState, zip) VALUES
+                    INSERT INTO ProviderLocations (Rndrng_Prvdr_CCN, Rndrng_Prvdr_State_FIPS, Rndrng_Prvdr_St, Rndrng_Prvdr_City, Rndrng_Prvdr_State_Abrvtn, Rndrng_Prvdr_Zip5) VALUES
                     ($1, $2, $3, $4, $5, $6)
                     '''
     ruca_insert = '''PREPARE rucaInsert(numeric, text) AS
-                    INSERT INTO RUCADescriptions (code, rucaDesc) VALUES
+                    INSERT INTO RUCADescriptions (Rndrng_Prvdr_RUCA, Rndrng_Prvdr_RUCA_Desc) VALUES
                     ($1, $2)
                     '''
     cd_insert = '''PREPARE cdInsert(int, text) AS
-                    INSERT INTO CDDescriptions (code, cdDesc) VALUES
+                    INSERT INTO CDDescriptions (DRG_Cd, DRG_Desc) VALUES
                     ($1, $2)
                     '''
     charge_insert = '''PREPARE chargesInsert(int, int, numeric, int, numeric, numeric, numeric) AS
-                    INSERT INTO Charges (prvdrCCN, cdCode, rucaCode, dscharges, avgCrvdChrg, avgPymt, avgMdcrPymt) VALUES
+                    INSERT INTO Charges (Rndrng_Prvdr_CCN, DRG_Cd, Rndrng_Prvdr_RUCA, Tot_Dschrgs, Avg_Submtd_Cvrd_Chrg, Avg_Tot_Pymt_Amt, Avg_Mdcr_Pymt_Amt) VALUES
                     ($1, $2, $3, $4, $5, $6, $7)
                     '''
     

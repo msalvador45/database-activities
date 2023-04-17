@@ -11,39 +11,39 @@ CREATE DATABASE ipps;
 
 -- create tables
 CREATE TABLE Providers(
-    ccn INT PRIMARY KEY,
-    prvdrName VARCHAR (500) NOT NULL
+    Rndrng_Prvdr_CCN INT PRIMARY KEY,
+    Rndrng_Prvdr_Org_Name VARCHAR (500) NOT NULL
 );
 
 CREATE TABLE ProviderLocations(
-    prvdrCCN INT NOT NULL,
-    stateFIPS INT NOT NULL,
-    street VARCHAR(500),
-    city VARCHAR(50),
-    prvdrState VARCHAR(2),
-    zip INT,
+    Rndrng_Prvdr_CCN INT NOT NULL,
+    Rndrng_Prvdr_State_FIPS INT NOT NULL,
+    Rndrng_Prvdr_St VARCHAR(500),
+    Rndrng_Prvdr_City VARCHAR(50),
+    Rndrng_Prvdr_State_Abrvtn VARCHAR(2),
+    Rndrng_Prvdr_Zip5 INT,
     PRIMARY KEY (prvdrCCN, stateFIPS),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
 );
 
 CREATE TABLE RUCADescriptions(
-    code NUMERIC(10,2) PRIMARY KEY,
-    rucaDesc VARCHAR(500) NOT NULL
+    Rndrng_Prvdr_RUCA NUMERIC(10,2) PRIMARY KEY,
+    Rndrng_Prvdr_RUCA_Desc VARCHAR(500) NOT NULL
 );
 
 CREATE TABLE CDDescriptions(
-    code INT PRIMARY KEY,
-    cdDesc VARCHAR(500) NOT NULL
+    DRG_Cd INT PRIMARY KEY,
+    DRG_Desc VARCHAR(500) NOT NULL
 );
 
 CREATE TABLE Charges(
-    prvdrCCN INT NOT NULL,
-    cdCode INT NOT NULL,
-    rucaCode NUMERIC(10,2) NOT NULL,
-    dscharges INT,
-    avgCrvdChrg NUMERIC,
-    avgPymt NUMERIC,
-    avgMdcrPymt NUMERIC,
+    Rndrng_Prvdr_CCN INT NOT NULL,
+    DRG_Cd INT NOT NULL,
+    Rndrng_Prvdr_RUCA NUMERIC(10,2) NOT NULL,
+    Tot_Dschrgs INT,
+    Avg_Submtd_Cvrd_Chrg NUMERIC,
+    Avg_Tot_Pymt_Amt NUMERIC,
+    Avg_Mdcr_Pymt_Amt NUMERIC,
     PRIMARY KEY (prvdrCCN, cdCode, rucaCode),
     FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
     FOREIGN KEY (cdCode) REFERENCES CDDescriptions(code),
@@ -60,6 +60,8 @@ GRANT ALL ON TABLE Providers, ProviderLocations, RUCADescriptions, CDDescription
 -- queries
 
 -- a) List all diagnosis in alphabetical order.    
+SELECT cdDesc FROM CDDescriptions
+ORDER BY cdDesc
 
 -- b) List the names and correspondent states (including Washington D.C.) of all of the providers in alphabetical order (state first, provider name next, no repetition). 
 
