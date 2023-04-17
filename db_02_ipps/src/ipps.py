@@ -9,22 +9,13 @@ import psycopg2
 import configparser as cp
 ## importing file into py script
 import csv 
-#with open('data/MUP_IHP_RY22_P02_V10_DY20_PrvSvc.csv', encoding='utf-8-sig') as csvfile:
-    #reader = csv.DictReader(csvfile)
-    #count = 0
-    #CCN = []
-    ##loop through csv to get values
-    #for row in reader:
-        #count = count + 1
-        #print (row['Rndrng_Prvdr_CCN'], row['Rndrng_Prvdr_Org_Name'])
-        ##CCN.append(row['Rndrng_Prvdr_CCN'])
-        #if count > 10:  #print out 10 values
-            #break 
 
+# logging in to user ipps
 config = cp.RawConfigParser()
 config.read('ConfigFile.properties')
 params = dict(config.items('db'))
 
+# connecting to db object
 conn = psycopg2.connect(**params)
 if conn: 
     print('Connection to Postgres database ' + params['dbname'] + ' was successful!')
@@ -55,7 +46,7 @@ if conn:
     # access csv file to get values
     with open('data/MUP_IHP_RY22_P02_V10_DY20_PrvSvc.csv', encoding='utf-8-sig') as csvfile:
         reader = csv.DictReader(csvfile)
-        tempList = []
+
         #loop through csv to store values into correspinging tables
         #count = 0
         for row in reader:

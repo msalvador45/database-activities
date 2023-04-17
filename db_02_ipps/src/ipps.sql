@@ -23,7 +23,7 @@ CREATE TABLE ProviderLocations(
     Rndrng_Prvdr_State_Abrvtn VARCHAR(2),
     Rndrng_Prvdr_Zip5 INT,
     PRIMARY KEY (Rndrng_Prvdr_CCN, Rndrng_Prvdr_State_FIPS),
-    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn)
+    FOREIGN KEY (Rndrng_Prvdr_CCN) REFERENCES Providers(Rndrng_Prvdr_CCN)
 );
 
 CREATE TABLE RUCADescriptions(
@@ -45,9 +45,9 @@ CREATE TABLE Charges(
     Avg_Tot_Pymt_Amt NUMERIC,
     Avg_Mdcr_Pymt_Amt NUMERIC,
     PRIMARY KEY (Rndrng_Prvdr_CCN, DRG_Cd, Rndrng_Prvdr_RUCA),
-    FOREIGN KEY (prvdrCCN) REFERENCES Providers(ccn),
-    FOREIGN KEY (cdCode) REFERENCES CDDescriptions(code),
-    FOREIGN KEY (rucaCode) REFERENCES RUCADescriptions(code)
+    FOREIGN KEY (Rndrng_Prvdr_CCN) REFERENCES Providers(Rndrng_Prvdr_CCN),
+    FOREIGN KEY (DRG_Cd) REFERENCES CDDescriptions(DRG_Cd),
+    FOREIGN KEY (Rndrng_Prvdr_RUCA) REFERENCES RUCADescriptions(Rndrng_Prvdr_RUCA)
 );
 
 -- create user with appropriate access to the tables
@@ -93,9 +93,24 @@ ON B.Rndrng_Prvdr_CCN = C.Rndrng_Prvdr_CCN
 GROUP BY A.Rndrng_Prvdr_RUCA;
 
 -- g) Show the DRG description for code 308 
+SELECT DRG_Cd, DRG_Desc FROM CDDescriptions
+WHERE DRG_CD = 308;
 
 -- h) List the top 10 providers (with their correspondent state) that charged (as described in Avg_Submtd_Cvrd_Chrg) the most for the DRG code 308. Output should display the provider name, their city, state, and the average charged amount in descending order.   
+SELECT Rndrng_Prvdr_State_Abrvtn, Rndrng_Prvdr_Org_Name, Avg_Submtd_Cvrd_Chrg, DRG_Cd FROM Charges
+NATURAL JOIN ProviderLocations
+NATURAL JOIN Providers
+WHERE DRG_Cd = 308
+ORDER BY Avg_Submtd_Cvrd_Chrg DESC
+LIMIT 10;
 
 -- i) List the average charges (as described in Avg_Submtd_Cvrd_Chrg) of all providers per state for the DRG code 308. Output should display the state and the average charged amount per state in descending order (of the charged amount) using only two decimals. 
+SELECT Rndrng_Prvdr_State_Abrvtn, AVG(Avg_Submtd_Cvrd_Chrg)::numeric(20,2) AS Avg_Cvrd_Chrg FROM CHARGES 
+NATURAL JOIN ProviderLocations
+NATURAL JOIN CDDescriptions
+WHERE DRG_Cd = 308
+GROUP BY Rndrng_Prvdr_State_Abrvtn 
+ORDER BY Avg_Cvrd_Chrg;
+
 
 -- j) Which provider and clinical condition pair had the highest difference between the amount charged (as described in Avg_Submtd_Cvrd_Chrg) and the amount covered by Medicare only (as described in Avg_Mdcr_Pymt_Amt)?
