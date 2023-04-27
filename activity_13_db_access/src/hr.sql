@@ -18,4 +18,8 @@ INSERT INTO Employees VALUES
 CREATE USER "hr" PASSWORD '024680';
 CREATE USER "hr_admin" PASSWORD '135791';
 
-\du 
+\du
+
+GRANT SELECT ON TABLE Employees TO "hr";
+GRANT ALL ON TABLE Employees TO "hr_admin";
+

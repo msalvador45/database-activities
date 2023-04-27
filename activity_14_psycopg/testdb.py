@@ -1,21 +1,18 @@
 import psycopg2
-import configparser as cp
+import configparser as cp 
 
-config = cp.RawConfigParser()
-config.read('ConfigFile.properties')
-params = dict(config.items('db'))
+config = cp.RawConfigParser() #object out of cp 
+config.read('ConfigFile.properties') #obj reads in file w/ function
+params = dict(config.items('db')) #store parameters in params 
 
+# connect to psycopg2
 conn = psycopg2.connect(**params)
-if conn: 
+
+# test connection
+if conn:
     print('Connection to Postgres database ' + params['dbname'] + ' was successful!')
 
-    # TODO: ask the user for a hotel's name and then using prepared staement 
-    # show the information about the hotel
-    name = input("? ")
-    cur = conn.curosr()
-    sql = "SELECT * FROM hotels WHERE name = '%s'"  #%s is a string look up more about this
-
     
     
-    print('Bye!')
-    conn.close()
+    print('Bye!') # after done executing commands 
+    conn.close() #close connection
