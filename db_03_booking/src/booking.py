@@ -57,7 +57,10 @@ def list_op(conn):
     cur.execute("SELECT * FROM ReservationsView;")
     print('\nThe following reservations are listed:')
     for reservation in cur.fetchall():
-        print(reservation)
+        print(reservation[0],reservation[1],reservation[2],reservation[3],
+              reservation[4],reservation[5],reservation[6])
+    print('\n')
+    return
 
 # TODO: reserve a room on a specific date and period, also saving the user who's the reservation is for
 def reserve_op(conn): 
@@ -83,12 +86,27 @@ def reserve_op(conn):
 
         # There is a string match, reservation does exist and have to exit out
         else: 
-            print('Room is occupied')
-            return; 
+            print('room not available')
+            return 
 
     # There is no string match, reservation can be made
     print("Reservation Room is Available")
+    try:
+        conn.set_isolation_level(extensions.ISOLATION_LEVEL_SERIALIZABLE)
+        cur.execute("execute NewReservation(%s, %s, %s, %s)",(userAbbr,userRoom, userDate, userPeriod))
+        conn.commit()
+    except:
+        conn.rollback() 
+        print("reservation could not be secured")
+        return
 
+    # Ask user to update reservation with name
+    userName = input("User ID: ")
+    cur.execute("execute UpdateReservationUser(%s,%s,%s,%s,%s)",(userName,userAbbr,userRoom,
+                                                                 userDate,userPeriod))
+    conn.commit()
+    print("Your Rservation Was Succesful")
+    return
         
 # TODO: delete a reservation given its code
 def delete_op(conn):
