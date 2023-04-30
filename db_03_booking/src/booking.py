@@ -9,6 +9,8 @@ import psycopg2
 from psycopg2 import extensions, errors
 import configparser as cp
 from datetime import datetime
+# psychopg2 lib extra tools
+import psycopg2.extras
 
 def menu(): 
     print('1. List')
@@ -51,12 +53,43 @@ def db_connect():
 
 # TODO: display all reservations in the system using the information from ReservationsView
 def list_op(conn):
-    pass
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("SELECT * FROM ReservationsView;")
+    print('\nThe following reservations are listed:')
+    for reservation in cur.fetchall():
+        print(reservation)
 
 # TODO: reserve a room on a specific date and period, also saving the user who's the reservation is for
 def reserve_op(conn): 
-    pass
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # ask user for date (yyyy-mm-dd), period(A), abbr(AAA), room(111)
+    userDate = input("date for resrvation in yyyy-mm-dd format: ")
+    userPeriod = input("period slot: ")
+    userAbbr = input("building abbr: ")
+    userRoom = input("building room number: ")
+    
+    # check for reservation if exists
+    cur.execute("execute QueryReservationExists(%s, %s, %s, %s)", (userAbbr, userRoom,userDate, userPeriod))
+    for rsvs in cur.fetchall():
+        # check if reservation input has a match(reservation exists)
+        if str(rsvs['abbr']==None)==userAbbr:
+            pass 
+        if str(rsvs['room']==None)==userRoom:
+            pass 
+        if str(rsvs['date']==None)==userDate:
+            pass 
+        if str(rsvs['period']==None)==userPeriod:
+            pass 
 
+        # There is a string match, reservation does exist and have to exit out
+        else: 
+            print('Room is occupied')
+            return; 
+
+    # There is no string match, reservation can be made
+    print("Reservation Room is Available")
+
+        
 # TODO: delete a reservation given its code
 def delete_op(conn):
     pass
