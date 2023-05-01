@@ -53,7 +53,7 @@ def db_connect():
 
 # TODO: display all reservations in the system using the information from ReservationsView
 def list_op(conn):
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur = conn.cursor()
     cur.execute("SELECT * FROM ReservationsView;")
     print('\nThe following reservations are listed:')
     for reservation in cur.fetchall():
@@ -75,22 +75,29 @@ def reserve_op(conn):
     cur.execute("execute QueryReservationExists(%s, %s, %s, %s)", (userAbbr, userRoom,userDate, userPeriod))
     for rsvs in cur.fetchall():
         # check if reservation input has a match(reservation exists)
-        if str(rsvs['abbr']==None)==userAbbr:
+        if str(rsvs['abbr'])==userAbbr:
+            pass
+        else:
+            break
+        if str(rsvs['room'])==userRoom:
             pass 
-        if str(rsvs['room']==None)==userRoom:
+        else:
+            break
+        if str(rsvs['date'])==userDate:
             pass 
-        if str(rsvs['date']==None)==userDate:
+        else:
+            break
+        if str(rsvs['period'])==userPeriod:
             pass 
-        if str(rsvs['period']==None)==userPeriod:
-            pass 
+        else:
+            break
 
-        # There is a string match, reservation does exist and have to exit out
-        else: 
-            print('room not available')
-            return 
+        # we have a match therfore the reservation exists
+        print('room not available')
+        return
 
-    # There is no string match, reservation can be made
-    print("Reservation Room is Available")
+    # no matching string therfore the reservation DNE
+    print("room is available")
     try:
         conn.set_isolation_level(extensions.ISOLATION_LEVEL_SERIALIZABLE)
         cur.execute("execute NewReservation(%s, %s, %s, %s)",(userAbbr,userRoom, userDate, userPeriod))
@@ -110,7 +117,32 @@ def reserve_op(conn):
         
 # TODO: delete a reservation given its code
 def delete_op(conn):
-    pass
+    cur= conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    # Ask user for reservation code
+    userRsvt = input("Enter Reservation Code: ")
+    
+    # Check if reservation code exists
+    cur.execute("execute QueryReservationExistsByCode(%s)", (userRsvt,))
+    for rsvs in cur.fetchall():
+        if str(rsvs['code'])==userRsvt: 
+            #reservation has matching user reservation code
+            print('reservation exists')
+            
+        # try for exception
+        try: 
+            conn.set_isolation_level(extensions.ISOLATION_LEVEL_SERIALIZABLE)
+            cur.execute("execute DeleteReservation(%s)", (userRsvt,))
+        except:
+            conn.rollback()
+            print('reservation could not be deleted')
+    
+        # commit reservation 
+        conn.commit()
+        print('Reservation Was Deleted')
+        return
+            
+    print("no reservation exists")
+    return
 
 if __name__ == "__main__":
     with db_connect() as conn: 
