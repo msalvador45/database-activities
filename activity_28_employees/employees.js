@@ -1,7 +1,5 @@
-// create db
-use employees;
+use employees
 
-// create collection
 db.employees.insertMany([
     {
         name: 'John', 
@@ -58,24 +56,39 @@ db.employees.insertMany([
         name: 'Maria', 
         department: 'finances', 
         projects: ['conix', 'filemenup', 'scrosnes', 'specima', 'bluffee' ]
-    }
-])
+    }])
 
-// number of emplyees per department
-// hint: use the groupandsum pipeline opertors
+// number of employees per department
+// hint: use the $group and $sum pipeline operators 
 db.employees.aggregate(
     [
         {
             $group:
                 {
-                    _id: "$department", 
-                    employees: {        // nam for field of number of employees
+                    _id: "$department",
+                    employees: {
+                        $sum: 1
+                    }
+                }
+        }
+    ]
+)
+
+// same but in alphabetical order
+// hint: same as the previous query but ending with a $sort pipeline stage
+db.employees.aggregate(
+    [
+        {
+            $group:
+                {
+                    _id: "$department",
+                    employees: {
                         $sum: 1
                     }
                 }
         },
         {
-            $sort:
+            $sort: 
                 {
                     _id: 1
                 }
@@ -83,23 +96,20 @@ db.employees.aggregate(
     ]
 )
 
-// same but in alphabetical order
-// already did above
-
-//same but in descending oder by number of employees
+// same but in descending order by number of employees
 db.employees.aggregate(
     [
         {
             $group:
                 {
-                    _id: "$department", 
-                    employees: {        // nam for field of number of employees
+                    _id: "$department",
+                    employees: {
                         $sum: 1
                     }
                 }
         },
         {
-            $sort:
+            $sort: 
                 {
                     employees: -1
                 }
@@ -107,5 +117,46 @@ db.employees.aggregate(
     ]
 )
 
+db.employees.aggregate(
+    [
+        {
+            $group:
+                {
+                    _id: "$department",
+                    employees: {
+                        $sum: 1
+                    }
+                }
+        },
+        {
+            $sort: 
+                {
+                    employees: -1
+                }
+        }, 
+        {
+            $limit: 1
+        }, 
+        {
+            $project: 
+                {
+                    _id: true
+                }
+        }
+    ]
+)
 // alphabetic list of all project names
-// hing: first use
+// hint: first use $unwind to extract all projects from the array with the same name; then group by projects and use $sort to have the list in alphabetical order
+db.employees.aggregate(
+    [
+        {
+            $unwind: "$projects" 
+        }
+    ]
+)
+
+// number of employees per project (alphabetical order too)
+// hint: same as the previous one but using $sum to count the number of employees
+
+// of the employees that work on projects, what it is the average number of projects that they work on
+// hint: use $match to filter the employees that work on projects; then use $size to project the number of projects per employee; finally, compute the average of projects that each employee works on
