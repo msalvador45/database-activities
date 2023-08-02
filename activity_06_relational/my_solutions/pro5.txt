@@ -1,0 +1,4 @@
+# A one to many, exclusive to optional
+# Strong to weak
+Shippings(order_number:int, address:str)
+Items(shipping_orderNumber:int, seq_number:int, description:str)

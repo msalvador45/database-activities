@@ -1,6 +1,6 @@
 -- CS3810: Principles of Database Systems
 -- Instructor: Thyago Mota
--- Student: 
+-- Student: Miguel Angel Salvador Tzoni
 -- Description: a database of tv series
 
 CREATE DATABASE series;
@@ -58,11 +58,33 @@ INSERT INTO Acts VALUES (3, 7);
 INSERT INTO Acts VALUES (3, 8);
 
 -- TODO #1) return all actors/actresses sorted by actorId
+SELECT actorId, actorName FROM Actors
+ORDER BY 1;
 
 -- TODO #2) return all actresses sorted by actorName
+SELECT actorName FROM Actors
+WHERE sex = 'F'
+ORDER BY 1;
 
 -- TODO #3) return the counts of actors and actress using two columns: 'sex' and 'total', sorted by sex
+SELECT sex, COUNT(*) AS Total FROM Actors
+GROUP BY sex
+ORDER BY sex;
 
 -- TODO #4) return the names of the actors/actresses that were in 'The Americans' sorted by actorName
+SELECT B.actorName, C.title FROM Acts A
+INNER JOIN Actors B 
+ON A.actorID = B.actorID 
+INNER JOIN Series C 
+ON A.seriesID = C.seriesID
+WHERE C.title = 'The Americans'
+ORDER BY B.actorName;
 
 -- TODO #5) return the names of actors/actresses that didn't appear in any series sorted by actorName
+SELECT B.actorName, C.title FROM Acts A
+INNER JOIN Actors B 
+ON A.actorID = B.actorID 
+INNER JOIN Series C 
+ON A.seriesID = C.seriesID
+WHERE C.title = NULL
+ORDER BY B.actorName;

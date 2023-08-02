@@ -156,14 +156,31 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- a) the number of star wars films
 
 -- b) the age group (description) that has the most fans
+-- inner join will do the job, we need description
+SELECT id, description
+FROM AgeGroups A 
+INNER JOIN Fans B 
+ON A.seq = B.age
+GROUP BY description
+LIMIT 10;
 
 -- c) the education level (description) with the least number of fans
+SELECT description 
+FROM EducationLevels A 
+INNER JOIN Fans B 
+ON A.seq = B.education 
+GROUP BY description 
+ORDER BY COUNT(id)
+LIMIT 1;
+
 
 -- d) the name of the star wars characters in alphabetical order
 
 -- e) the star wars characters that have no fan ratings 
 
 -- f) the top 3 star wars characters based on fan ratings, showing their names and the average rating (rounded to 2 decimals) that they received 
+-- wannt name of characters want ratings from charRatings
+--   to do that we will need a join
 
 -- g) The ids of the fans that gave a rating of 1 for "Darth Vader", in ascending order, so that they be banned from future star wars views
 
@@ -178,6 +195,7 @@ INSERT INTO FilmRatings VALUES (6716,1,2), (6716,2,5), (29200,2,4), (29200,4,5),
 -- m) the name of the character that received the least number of ratings 
 
 -- n) the favorite character according the yongest fan audience
+
 
 -- o) the income levels (descriptions) that has at least 100 fans, ordered by income sequential number
 

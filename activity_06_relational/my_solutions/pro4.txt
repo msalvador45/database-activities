@@ -1,0 +1,6 @@
+# many to many optional optional relationship
+
+Employees(ssn:int, name:str)
+Projects(number:int, title:str)
+
+Employee_Projects(ssn:int, projectNumber:int, hour:int)

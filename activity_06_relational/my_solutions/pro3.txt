@@ -1,0 +1,7 @@
+# A many to many relationship
+# both are strong entities
+
+Candidates(ssn:int, name:str)
+JobPositions(number:int, title:str, department:str)
+
+Applications(ssn:int, jobPosition_Number:int)
