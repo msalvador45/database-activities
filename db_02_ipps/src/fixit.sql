@@ -1,4 +1,4 @@
--- fix the damn db
+-- fix the db
 
 -- fix Providers
 ALTER TABLE Providers
